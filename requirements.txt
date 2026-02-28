@@ -4,3 +4,4 @@ pymongo>=4.0
 python-dotenv>=0.20
 werkzeug>=2.0
 python-multipart>=0.0.5
+guinicorn==21.2.0
