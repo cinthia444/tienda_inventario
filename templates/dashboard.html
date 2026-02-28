@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Panel de Control{% endblock %}
+
+{% block content %}
+
+<div style="background:#2c3e50; padding:15px; text-align:center; margin-bottom:20px; border-radius:5px">
+    <a href="/" style="color:white; margin:15px; text-decoration:none; font-weight:bold">🏠 INICIO</a>
+    <a href="/inventory" style="color:white; margin:15px; text-decoration:none; font-weight:bold">📦 INVENTARIO</a>
+    <a href="/dashboard" style="color:white; margin:15px; text-decoration:none; font-weight:bold">⚙ ADMIN</a>
+    <a href="/historial" style="color:yellow; margin:15px; text-decoration:none; font-weight:bold">📋 HISTORIAL</a>
+    {% if current_user.is_authenticated %}
+        <span style="color:yellow; margin-left:30px">👤 {{ current_user.username }}</span>
+    {% endif %}
+</div>
+
+<div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total de productos</h3>
+      <div class="number">{{ total_products }}</div>
+    </div>
+    <div class="stat-card">
+      <h3>Productos con poco stock</h3>
+      <div class="number" style="color:#ff8a8a">{{ low_stock }}</div>
+    </div>
+  </div>
+
+  <div class="chart-box">
+    <h3>Productos por categoría</h3>
+    <canvas id="productosChart" style="height:260px"></canvas>
+  </div>
+</div>
+
+
+<div style="margin-top:30px; background:white; padding:20px; border-radius:10px">
+    <h3>📊 Movimientos Recientes</h3>
+    <table style="width:100%; border-collapse:collapse; margin-top:15px">
+        <tr style="background:#34495e; color:white">
+            <th style="padding:10px">Usuario</th>
+            <th>Acción</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+        </tr>
+        {% for m in movimientos %}
+        <tr style="border-bottom:1px solid #ccc">
+            <td style="padding:8px">{{ m.usuario }}</td>
+            <td>{{ m.accion }}</td>
+            <td>{{ m.producto }}</td>
+            <td>{{ m.cantidad }}</td>
+            <td>{{ m.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div style="text-align:center; margin-top:15px">
+        <a href="/historial" style="background:#3498db; color:white; padding:8px 20px; text-decoration:none; border-radius:5px">Ver historial completo</a>
+    </div>
+</div>
+
+<a href="{{ url_for('product_new') }}" class="fab">+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const labels = JSON.parse('{{ labels | tojson | safe }}');
+const values = JSON.parse('{{ values | tojson | safe }}');
+
+new Chart(document.getElementById('productosChart'), {
+  type: 'bar',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'Productos',
+      data: values,
+      backgroundColor: 'rgba(0,200,255,0.35)',
+      borderColor: 'rgba(0,200,255,1)',
+      borderRadius: 6
+    }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true}} }
+});
+</script>
+{% endblock %}

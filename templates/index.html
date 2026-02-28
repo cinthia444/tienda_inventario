@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Inicio - Tienda Inventario{% endblock %}
+{% block page_title %}Bienvenido a Tienda Inventario{% endblock %}
+
+{% block content %}
+<div style="background:#2c3e50; padding:15px; text-align:center; margin-bottom:20px; border-radius:5px">
+    <a href="{{ url_for('home') }}" style="color:white; margin:15px; text-decoration:none; font-weight:bold">🏠 INICIO</a>
+    <a href="{{ url_for('inventory') }}" style="color:white; margin:15px; text-decoration:none; font-weight:bold">📦 INVENTARIO</a>
+    <a href="{{ url_for('dashboard') }}" style="color:white; margin:15px; text-decoration:none; font-weight:bold">⚙ ADMIN</a>
+    <a href="{{ url_for('historial') }}" style="color:white; margin:15px; text-decoration:none; font-weight:bold">📋 HISTORIAL</a>
+    {% if current_user.is_authenticated %}
+        <span style="color:yellow; margin-left:30px">👤 {{ current_user.username }}</span>
+        <a href="{{ url_for('logout') }}" style="color:white; margin-left:15px">🚪 Salir</a>
+    {% else %}
+        <a href="{{ url_for('login') }}" style="color:yellow; margin-left:30px">🔐 INICIAR SESIÓN</a>
+    {% endif %}
+</div>
+
+<div style="background:white; padding:40px; text-align:center; border-radius:10px; margin-bottom:30px; box-shadow:0 2px 10px rgba(0,0,0,0.1)">
+    <h2 style="color:#2c3e50; font-size:32px; margin-bottom:15px">🏪 Tienda de Inventario</h2>
+    <p style="color:#7f8c8d; font-size:18px; margin-bottom:25px">Gestiona y controla tu stock de productos de manera fácil y rápida.</p>
+    {% if not current_user.is_authenticated %}
+    <a href="{{ url_for('login') }}" style="background:#27ae60; color:white; padding:15px 40px; text-decoration:none; border-radius:50px; font-weight:bold; display:inline-block">INICIAR SESIÓN</a>
+    {% endif %}
+    <a href="{{ url_for('inventory') }}" style="background:#3498db; color:white; padding:15px 40px; text-decoration:none; border-radius:50px; font-weight:bold; display:inline-block; margin-left:10px">VER INVENTARIO</a>
+</div>
+
+<h2 style="color:#2c3e50; margin-bottom:20px">🌟 Productos Disponibles</h2>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:20px">
+    {% for p in productos %}
+    <div style="background:white; border-radius:10px; padding:20px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:center">
+        <h3 style="color:#2c3e50; border-bottom:2px solid #3498db; padding-bottom:10px">{{ p.name }}</h3>
+        <div style="font-size:28px; color:#27ae60; font-weight:bold; margin:15px 0">${{ '%.2f'|format(p.price) }}</div>
+        <div style="background:#f1c40f; padding:8px; border-radius:20px; margin:15px 0">📦 Stock: {{ p.quantity }} unidades</div>
+        <a href="{{ url_for('inventory') }}" style="background:#3498db; color:white; padding:8px 20px; text-decoration:none; border-radius:5px">Ver Detalles</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

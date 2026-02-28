@@ -1,0 +1,175 @@
+
+:root {
+  --main: #4C6EF5;
+  --main-dark: #3B5BDB;
+  --bg: #f4f6fa;
+  --text: #111;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, var(--main), var(--main-dark));
+  padding: 18px 0;
+  color: white;
+  box-shadow: 0 6px 18px rgba(16, 24, 64, 0.08);
+}
+
+header .container {
+  width: 95%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 16px;
+  font-weight: 500;
+}
+
+/* BUTTONS */
+.button {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  background: var(--main);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.button.small {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.button.outline {
+  background: transparent;
+  border: 1px solid #d0d3dd;
+  color: var(--muted);
+}
+
+.button.danger {
+  background: #EF4444;
+}
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-top: 22px;
+  box-shadow: 0 6px 20px rgba(24, 32, 69, 0.06);
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+th {
+  background: #eef1f8;
+  padding: 10px;
+  text-align: left;
+  color: #333;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f5;
+  vertical-align: middle;
+}
+
+.thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* FORMS */
+label {
+  display: block;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #d6d8e0;
+}
+
+.form-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.flash {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.flash.success { 
+  color: #78350f;
+  border-left: 4px solid #f59e0b;
+}
+
+.chart-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 360px;
+}
+
+.summary-card {
+    padding: 20px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.summary-card.warning {
+    background: #fff4d6;
+}

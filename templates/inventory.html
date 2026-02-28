@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Inventario{% endblock %}
+{% block page_title %}Inventario{% endblock %}
+
+{% block content %}
+
+<div style="background:#2c3e50; padding:15px; text-align:center; margin-bottom:20px; border-radius:5px">
+    <a href="{{ url_for('home') }}" style="color:white; margin:15px; text-decoration:none; font-weight:bold">🏠 INICIO</a>
+    <a href="{{ url_for('inventory') }}" style="color:white; margin:15px; text-decoration:none; font-weight:bold">📦 INVENTARIO</a>
+    <a href="{{ url_for('dashboard') }}" style="color:white; margin:15px; text-decoration:none; font-weight:bold">⚙ ADMIN</a>
+    {% if current_user.is_authenticated %}
+        <span style="color:yellow; margin-left:30px">👤 {{ current_user.username }}</span>
+    {% else %}
+        <a href="{{ url_for('login') }}" style="color:yellow; margin-left:30px">🔐 INICIAR SESIÓN</a>
+    {% endif %}
+</div>
+
+<div class="card p-3 form-card">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>Inventario</h3>
+    <div>
+      <a href="{{ url_for('product_new') }}" class="top-action">Agregar producto</a>
+    </div>
+  </div>
+</div>
+
+<div style="height:12px"></div>
+
+<div class="catalog-grid">
+  {% for p in products %}
+  <div class="product-card">
+    {% if p.image %}
+    <img src="{{ url_for('uploaded_file', filename=p.image) }}">
+    {% else %}
+    <img src="{{ url_for('static', filename='no-image.png') }}">
+    {% endif %}
+    <div class="body">
+      <div class="title">{{ p.name }}</div>
+      <div class="meta">{{ (p.get('description') or '')[:90] }}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">${{ '%.2f'|format(p.price) }}</div>
+        <div class="card-actions">
+          <a class="btn btn-sm btn-outline-primary" href="{{ url_for('product_edit', id=p._id) }}">Editar</a>
+          <form method="post" action="{{ url_for('product_delete', id=p._id) }}" style="display:inline" onsubmit="return confirm('¿Eliminar producto?')">
+            <button class="btn btn-sm btn-danger">Eliminar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
